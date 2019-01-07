@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -27,6 +29,12 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+    function authenticated(Request $request, $user)
+{
+    $user->update([
+        'last_login' => Carbon::now()->toDateTimeString()
+    ]);
+}
     /**
      * Create a new controller instance.
      *
